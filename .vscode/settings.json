@@ -1,0 +1,5 @@
+{
+    "oz.enableLinter": true,
+    "oz.showOutput": false,
+    "oz.focusCompilerOutput": false
+}
