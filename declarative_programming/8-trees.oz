@@ -1,7 +1,6 @@
 % Define a Ordered Binary (Unbalanced) tree.
 % S, C -> OBTree>::=leaf|tree(<OValue> <Value> <Tree1> <Tree2>)
 % F -> Lookup/3, Insert/4, Delete/3
-
 declare
 fun {NewTree} leaf end
 
@@ -66,7 +65,7 @@ T5={Insert ~5 a T4}
 {Show {Delete ~5 T5}}
 
 % <Tree> -> <List<OValue#Value>>
-% Using inorder navigation
+% Using inorder DFS navigation
 fun {DFS T}
     case T of leaf then nil
     [] tree(K V Tl Tr) then
@@ -75,4 +74,28 @@ fun {DFS T}
 end
 % OK!
 
-{Show {DFS T5}}
+{Show 'DFS='#{DFS T5}}
+
+% from 2-stack_and_queue.oz
+declare
+fun {NewQueue} X in q(0 X X) end
+fun {Insert q(N S E1) E} E2 in E1=E|E2 q(N+1 S E2) end
+fun {Delete q(N Hs|Ts E)} Hs#q(N-1 Ts E) end
+fun {IsEmpty q(N _ _)} N==0 end
+
+% <Tree> -> <List<OValue#Value>>
+% Using BFS navigation
+fun {BFS Q Acc}
+    if {IsEmpty Q} then Acc
+    else
+        T Q1 in T#Q1={Delete Q}
+        case T of leaf then 
+            {BFS Q1 Acc}
+        [] tree(K V Tl Tr) then 
+            {BFS {Insert {Insert Q1 Tl} Tr} {Insert Acc K#V}} 
+        end
+    end
+end
+% OK!
+
+{Show 'BFS='#{BFS {Insert {NewQueue} T5} {NewQueue}}}

@@ -9,16 +9,11 @@ proc {Pop S ?E ?S1} S=E|S1 end
 % The queue is FIFO
 % queue(NumElements Body Queue)
 fun {NewQueue} X in queue(0 X X) end
-fun {Insert Q E} 
-    case Q of queue(N S E1) then
-        E2 in E1=E|E2 queue(N+1 S E2)
-    end
+fun {Insert queue(N S E1) E} 
+    E2 in E1=E|E2 queue(N+1 S E2)
 end
-fun {Delete Q}
-    case Q of queue(N Hs|Ts E) then
-        Hs#queue(N-1 Ts E) 
-    end
-end
+fun {Delete queue(N Hs|Ts E)} Hs#queue(N-1 Ts E) end
+fun {IsEmpty queue(N _ _)} N==0 end
 
 
 % queue(0 _ _)
