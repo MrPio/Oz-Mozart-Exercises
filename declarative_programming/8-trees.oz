@@ -64,3 +64,15 @@ T5={Insert ~5 a T4}
 {Show {Delete 2 T5}}
 {Show {Delete 17 T5}}
 {Show {Delete ~5 T5}}
+
+% <Tree> -> <List<OValue#Value>>
+% Using inorder navigation
+fun {DFS T}
+    case T of leaf then nil
+    [] tree(K V Tl Tr) then
+        {Append {DFS Tl} K#V|{DFS Tr}}
+    end
+end
+% OK!
+
+{Show {DFS T5}}
