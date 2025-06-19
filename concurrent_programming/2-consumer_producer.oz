@@ -1,4 +1,4 @@
-% Data-driven ============================
+% Data-driven (Eager) ============================
 declare DelayAmount=100
 fun {Produce N Limit}
     {Delay DelayAmount}
@@ -16,7 +16,7 @@ thread Stream={Produce 1 10} end
 thread Result={Consume Stream 0} end
 {Browse Result}
 
-% Demand driven ============================
+% Demand driven (Lazy) ============================
 declare
 proc {Produce N Xs}
     {Delay DelayAmount}
@@ -34,7 +34,7 @@ thread {Produce 1 Xs} end
 thread Result={Consume Xs 0 10} end
 {Browse Result}
 
-% Lazy Evaluation ============================
+% Lazy Evaluation (Lazy) ============================
 declare
 fun lazy {Produce N}
     {Delay 100}
@@ -48,6 +48,6 @@ end
 % OK!
 
 declare Result Xs
-Xs= {Produce 1}
+Xs={Produce 1}
 thread Result={Consume Xs 0 10} end
 {Browse Result}
