@@ -14,7 +14,7 @@ fun {NewPlayer Me Others}
         Rand 
     in  Rand={OS.rand} mod {Width Others}+1
         {Show Me#' got the ball!'}
-        {Delay 1000}
+        {Delay 1}
         {Send Others.Rand ball}
     end}
 end
