@@ -1,5 +1,5 @@
 % Define a Ordered Binary (Unbalanced) tree.
-% S, C -> OBTree>::=leaf|tree(<OValue> <Value> <Tree1> <Tree2>)
+% S, C -> <OBTree>::=leaf|tree(<OValue> <Value> <Tree1> <Tree2>)
 % F -> Lookup/3, Insert/4, Delete/3
 declare
 fun {NewTree} leaf end
@@ -45,7 +45,7 @@ end
 % <Tree> -> <OValue>#<Value>|nil
 fun {Smallest T}
     case T of tree(K V leaf Tr) then K#V
-    [] lead then nil
+    [] leaf then nil
     [] tree(_ _ Tl _) then {Smallest Tl} end
 end
 % OK! The only difference with teacher's is when Key==K and Tl==leaf. This returns Tr, while the teacher's moves the smallest of Tr to the root and sets the new right subtree as Tr removed from the smallest. I think my is better because it's symmetric between Tl==leaf and Tr==leaf, so it doesn't harm the balance of the tree.
@@ -79,8 +79,8 @@ end
 % from 2-stack_and_queue.oz
 declare
 fun {NewQueue} X in q(0 X X) end
-fun {Insert q(N S E1) E} E2 in E1=E|E2 q(N+1 S E2) end
-fun {Delete q(N Hs|Ts E)} Hs#q(N-1 Ts E) end
+fun {Enqueue q(N S E1) E} E2 in E1=E|E2 q(N+1 S E2) end
+fun {Dequeue q(N Hs|Ts E)} Hs#q(N-1 Ts E) end
 fun {IsEmpty q(N _ _)} N==0 end
 
 % <Tree> -> <List<OValue#Value>>
@@ -88,14 +88,14 @@ fun {IsEmpty q(N _ _)} N==0 end
 fun {BFS Q Acc}
     if {IsEmpty Q} then Acc
     else
-        T Q1 in T#Q1={Delete Q}
+        T Q1 in T#Q1={Dequeue Q}
         case T of leaf then 
             {BFS Q1 Acc}
         [] tree(K V Tl Tr) then 
-            {BFS {Insert {Insert Q1 Tl} Tr} {Insert Acc K#V}} 
+            {BFS {Enqueue {Enqueue Q1 Tl} Tr} {Enqueue Acc K#V}} 
         end
     end
 end
 % OK!
 
-{Show 'BFS='#{BFS {Insert {NewQueue} T5} {NewQueue}}}
+{Show 'BFS='#{BFS {Enqueue {NewQueue} T5} {NewQueue}}}
