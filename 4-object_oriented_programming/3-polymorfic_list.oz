@@ -16,14 +16,13 @@ end
 
 class ConsList from AbsList
     attr val next
-    meth init(Val<=none Next<=none)
+    meth init(Val Next)
         val<-Val next<-Next
     end
     meth isNil(B) B=false end
-    meth append(Oth ?L) 
+    meth append(Oth ?L)
         L1 in {@next append(Oth L1)}
-        % if @next == nil then
-        L={New ConsList init(@val L1)}
+        {New ConsList init(@val L1)}
     end
     meth display
         {Show @val}
