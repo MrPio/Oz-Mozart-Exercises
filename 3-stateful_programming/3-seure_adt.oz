@@ -22,6 +22,7 @@ in
     end
     fun {Unwrap W} {W Key} end
 end
+
 declare NewStack Push Pop IsEmpty
 local
     Wrap Unwrap
