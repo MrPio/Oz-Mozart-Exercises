@@ -1,6 +1,6 @@
 % My solution. Easier to understand the solution validation part.○
 declare
-fun {MakePos MaxN N}c
+fun {MakePos MaxN N}
     fun {Pos N} 
         if N==1 then 1
         else choice N [] {Pos N-1} end end 
