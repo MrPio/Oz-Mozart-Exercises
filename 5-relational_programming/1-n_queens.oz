@@ -1,4 +1,4 @@
-% My solution. Easier to understand the solution validation part.○
+% My solution. Easier to understand the solution validation part.
 declare
 fun {MakePos MaxN N}
     fun {Pos N} 
