@@ -1,13 +1,13 @@
 declare
-
 fun {Take L N Start}
-    case L of nil then nil
-    [] H|T then if Start==0 then H|{Take L N-1 0} else {Take L N Start-1} end
+    if N==0 then nil else
+        case L of nil then nil
+        [] H|T then if Start==0 then H|{Take T N-1 0} else {Take T N Start-1} end end
+    end
 end
 
 proc {Sudoku Puzzle ?Sol}
-    Sol={List.make 9}
-    {List.forAll Sol proc {$ ?X} X={FD.list 9 1#9}end}
+    Sol={Map {List.make 9} fun {$ Row} {FD.list 9 1#9} end}
     
     % Row constraint
     for I in 1..9 do
@@ -38,7 +38,7 @@ proc {Sudoku Puzzle ?Sol}
         end
     end
 
-    {FD.distribute ff {List.flatten Grid}}
+    {FD.distribute ff {List.flatten Sol}}
 end
 
 Puzzle=[
@@ -52,4 +52,16 @@ Puzzle=[
     [_ _ _ 4 _ 9 _ _ 5]
     [_ _ _ _ _ _ _ 7 9]
 ]
+{Show starting}
 {Show {Search.base.all proc {$ ?X} {Sudoku Puzzle X} end}}
+{Show ending}
+
+% 5 3 4 8 7 6 9 1 2 
+% 6 7 2 1 9 5 3 4 8 
+% 1 9 8 2 3 4 5 6 7 
+% 8 1 9 7 6 2 4 5 3 
+% 4 2 6 5 8 3 7 9 1 
+% 7 5 3 9 4 1 8 2 6 
+% 9 6 1 3 5 7 2 8 4 
+% 2 8 7 4 1 9 6 3 5 
+% 3 4 5 6 2 8 1 7 9
