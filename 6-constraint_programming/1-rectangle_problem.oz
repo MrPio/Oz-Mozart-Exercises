@@ -7,4 +7,5 @@ in
     {FD.distribute ff Sol}
 end
 
-Sol={Search.base.all Rectangle}
+{Show {Search.base.all Rectangle}}
+% [[4 6]]
