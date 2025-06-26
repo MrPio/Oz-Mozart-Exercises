@@ -9,7 +9,7 @@ in
 end
 
 fun {NewPlayer Me Others}
-    {NewAgent 
+    { 
     proc{$ ball}
         Rand 
     in  Rand={OS.rand} mod {Width Others}+1

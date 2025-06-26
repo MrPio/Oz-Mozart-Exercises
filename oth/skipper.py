@@ -35,29 +35,39 @@ def find_clusters(image, target_bgr, tolerance):
     ]
     return clusters
 
-
 def main():
+    time=0
+    i=0
+    a=993
+    scoid=3335
+    
+    i+=1
+    time=0
+
     while True:
         sleep(DELAY)
+        time+=DELAY
+        
         screenshot = pyautogui.screenshot()
         img = cv2.cvtColor(np.array(screenshot), cv2.COLOR_RGB2BGR)
+        clusters = find_clusters(img, hex_to_bgr(TARGET_COLOR), COLOR_TOLERANCE)
 
-        target_bgr = hex_to_bgr(TARGET_COLOR)
-        clusters = find_clusters(img, target_bgr, COLOR_TOLERANCE)
+        if clusters:
+            playsound(wav_found)
+            smallest = max(clusters, key=lambda x: x[0])
+            _, (x, y) = smallest
+            pyautogui.click(x, y)
 
-        if not clusters:
-            # print("No cluster found.")
-            # playsound(wav_not_found)
-            continue
-    
-
-        # Get the smallest cluster
-        playsound(wav_found)
-        smallest = max(clusters, key=lambda x: x[0])
-        _, (x, y) = smallest
-        pyautogui.click(x, y)
-        print(f"Clicked at: ({x}, {y}), cluster={smallest}")
-
+        if time>8*60:
+            time=0
+            pyautogui.hotkey('ctrl','t')
+            sleep(0.5)
+            pyautogui.write(f"https://learn.univpm.it/mod/scorm/player.php?a={a+i}&currentorg=prac&scoid={scoid+i*2}")
+            sleep(0.5)
+            pyautogui.hotkey('enter')
+            sleep(0.5)
+            i+=1
+            
 
 if __name__ == "__main__":
     main()

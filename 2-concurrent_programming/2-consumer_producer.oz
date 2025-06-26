@@ -42,8 +42,7 @@ fun lazy {Produce N}
 end
 fun {Consume Xs Acc Limit}
     if Limit=<1 then Acc
-    else H T in Xs=H|T {Consume T Acc + H Limit-1}
-    end
+    else H T in Xs=H|T {Consume T Acc + H Limit-1} end
 end
 % OK!
 

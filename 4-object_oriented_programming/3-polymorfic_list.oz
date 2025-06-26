@@ -22,7 +22,7 @@ class ConsList from AbsList
     meth isNil(B) B=false end
     meth append(Oth ?L)
         L1 in {@next append(Oth L1)}
-        {New ConsList init(@val L1)}
+        L={New ConsList init(@val L1)}
     end
     meth display
         {Show @val}
